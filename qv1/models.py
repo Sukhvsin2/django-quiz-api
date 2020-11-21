@@ -7,6 +7,10 @@ class Quiz(models.Model):
     created_at = models.DateField(auto_now=True)
     url = models.URLField(verbose_name='url', null=True)
 
+    def __str__(self):
+        return self.name
+    
+
 class Question(models.Model):
     quiz_id  = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     question = models.TextField(verbose_name='question', null=False)
@@ -15,3 +19,7 @@ class Question(models.Model):
     choice3 = models.TextField(verbose_name='choice3', null=False)
     choice4 = models.TextField(verbose_name='choice4', null=False)
     answer = models.CharField(verbose_name='answer', max_length=10, null=False)
+
+    def __str__(self):
+        return self.question
+    

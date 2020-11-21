@@ -47,3 +47,24 @@ from rest_framework import generics
 class Quiz1(generics.ListCreateAPIView):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
+
+    
+    def delete(self, request):
+        queryset = Quiz.objects.get(id=request.data['id'])
+        queryset.delete()
+        return Response(data=request.data, status=status.HTTP_410_GONE)
+
+
+    def put(self, request):
+        # print(request.data)
+        quiz = Quiz.objects.get(id=request.data['id'])
+        serializer = QuizSerializer(quiz, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+
+class Question1(generics.ListCreateAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
