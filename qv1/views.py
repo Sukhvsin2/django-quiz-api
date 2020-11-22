@@ -30,7 +30,6 @@ class Question1(generics.CreateAPIView):
     serializer_class = QuestionSerializer
 
     def get(self, request, id, *args, **kwargs):
-        print('check ',id)
         questions = Question.objects.filter(quiz_id=id)
         serializer = QuestionSerializer(questions, many=True)
-        return Response(serializer.data, status=status.HTTP_302_FOUND)
+        return Response(serializer.data, status=status.HTTP_200_OK)
